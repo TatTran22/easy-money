@@ -4,5 +4,13 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "cSpell.words": ["clsx", "supabase", "zxcvbn"],
+  "cSpell.words": [
+    "chakra",
+    "clsx",
+    "supabase",
+    "zxcvbn"
+  ],
+  "i18n-ally.localesPaths": [
+    "internationalization/locales"
+  ],
 }

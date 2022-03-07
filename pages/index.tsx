@@ -1,20 +1,14 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 
+import CallToActionWithAnnotation from '~/src/components/CallToActionWithAnnotation'
 
-
+import Layout from '~/src/components/Layout'
 
 const Home: NextPage = () => {
   return (
-    <div className="container">
-      <Head>
-        <title>Easy Money</title>
-      </Head>
-      <div className="hero">
-        <h1 className="title">Welcome to Next.js!</h1>
-        </div>
-    </div>
+    <Layout>
+      <CallToActionWithAnnotation />
+    </Layout>
   )
 }
 

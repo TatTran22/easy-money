@@ -4,7 +4,8 @@
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*"],
+      "@/hooks/*": ["src/hooks/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,6 +20,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/404.tsx"],
   "exclude": ["node_modules"]
 }
