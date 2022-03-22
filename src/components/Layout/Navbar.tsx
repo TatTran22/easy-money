@@ -20,10 +20,11 @@ import {
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useEffect, useState } from 'react'
 import { AuthSession } from '@supabase/supabase-js'
-import { useTranslation } from 'react-i18next'
 import { supabase } from '~/src/utils/supabaseClient'
 import NAV_ITEMS from '~/src/utils/navItems'
 import type { NavItem } from '~/src/utils/navItems'
+import { SignOut } from '~/src/hooks/AuthUser'
+import siteMeta from '@/data/siteMetadata'
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -31,24 +32,23 @@ export default function WithSubnavigation() {
   const [loading, setLoading] = useState(false)
   const [session, setSession] = useState<AuthSession | null>(null)
   const { colorMode, toggleColorMode } = useColorMode()
-  const { t } = useTranslation()
 
   const handleSignOut = async () => {
     try {
       setLoading(true)
-      const { error } = await supabase.auth.signOut()
+      const { error } = await SignOut()
       if (error) {
         console.log(error)
         throw error
       }
       setSession(null)
       toast({
-        title: t('signOutSuccess'),
+        title: 'Logout successful',
         status: 'success',
-        duration: null,
+        duration: 7000,
         isClosable: true,
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
       toast({
         title: 'Error signing out',
@@ -66,9 +66,14 @@ export default function WithSubnavigation() {
     setSession(supabase.auth.session())
     console.log(supabase.auth.session())
 
-    supabase.auth.onAuthStateChange((_event: string, session: AuthSession | null) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log(`Supabase auth event: ${event}`)
       setSession(session)
     })
+
+    return () => {
+      authListener?.unsubscribe()
+    }
   }, [])
 
   return (
@@ -112,7 +117,7 @@ export default function WithSubnavigation() {
               position={{ base: 'absolute', md: 'relative' }}
               justifyContent={{ base: 'center', md: 'start' }}
             >
-              <Image src={'/images/dollar-512x512.png'} alt={'Easy Money'} w={'50px'} h={'50px'} />
+              <Image src={'/images/dollar-512x512.png'} alt={siteMeta.title} w={'50px'} h={'50px'} />
               <Text
                 textAlign={'center'}
                 fontFamily={'heading'}
@@ -120,7 +125,7 @@ export default function WithSubnavigation() {
                 fontWeight={'bold'}
                 color={useColorModeValue('brand.800', 'white')}
               >
-                Easy Money
+                {siteMeta.title}
               </Text>
             </Flex>
           </Link>

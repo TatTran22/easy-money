@@ -1,7 +1,6 @@
 import {
   InputLeftElement,
   Button,
-  FormHelperText,
   Box,
   FormControl,
   FormLabel,
@@ -22,10 +21,11 @@ import {
 import { ViewIcon, ViewOffIcon, EmailIcon, LockIcon } from '@chakra-ui/icons'
 import { FaFacebook, FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '~/src/utils/supabaseClient'
 import { validateEmail } from '~/src/utils/validateInput'
 import { Provider } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
 
 export function Login() {
   const [loading, setLoading] = useState(false)
@@ -33,6 +33,7 @@ export function Login() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const toast = useToast()
+  const router = useRouter()
 
   const handleLogin = async () => {
     const vldEmail = validateEmail(email)
@@ -62,6 +63,7 @@ export function Login() {
         duration: 5000,
         isClosable: true,
       })
+      router.push('/')
     } catch (error: any) {
       toast({
         title: 'Login failed',
@@ -70,7 +72,7 @@ export function Login() {
         duration: 5000,
         isClosable: true,
       })
-      alert(error.error_description || error.message)
+      console.log(error)
     } finally {
       setLoading(false)
     }
@@ -83,6 +85,11 @@ export function Login() {
     console.log(user, session, error)
   }
 
+  useEffect(() => {
+    if (supabase.auth.session()) {
+      router.push('/')
+    }
+  }, [])
   return (
     <HStack spacing={8} py={12} px={6} align={'center'} justifyContent={'center'}>
       <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'lg'}>

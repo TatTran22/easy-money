@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-
+import siteMeta from '@/data/siteMetadata'
 interface Props {
   title?: string
 }
@@ -9,8 +9,8 @@ const absolutePath = (path?: string) => {
   return `${process.env.BASE_URL}${path || ''}`
 }
 
-const siteTitle = 'Easy Money'
-const description = 'Money management app for the modern web.'
+const siteTitle = siteMeta.title
+const description = siteMeta.description
 
 const DocumentHead: React.FC<Props> = ({ title }) => {
   return (

@@ -19,8 +19,8 @@ import {
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon, EmailIcon, LockIcon } from '@chakra-ui/icons'
 import { supabase } from '~/src/utils/supabaseClient'
-import { User } from '@supabase/supabase-js'
 import { validateEmail, validateName, validatePassword } from '~/src/utils/validateInput'
+import { useRouter } from 'next/router'
 
 export function SignUp() {
   const [loading, setLoading] = useState(false)
@@ -30,9 +30,9 @@ export function SignUp() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
 
   const toast = useToast()
+  const router = useRouter()
 
   const handleSignUpSubmit = async () => {
     const vldFirstName = validateName(firstName)
@@ -85,7 +85,7 @@ export function SignUp() {
 
     try {
       setLoading(true)
-      const { user, session, error } = await supabase.auth.signUp(
+      const { error } = await supabase.auth.signUp(
         {
           email: email,
           password: password,
@@ -101,12 +101,10 @@ export function SignUp() {
       toast({
         title: 'Success!',
         description: 'You have successfully signed up. Please check your email to verify your account.',
-        duration: null,
+        duration: 7000,
         isClosable: true,
       })
-      setUser(user)
-      console.log(user)
-      console.log(session)
+      router.push('/')
     } catch (error: any) {
       console.log(error)
       toast({

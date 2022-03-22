@@ -6,7 +6,7 @@ import Layout from '~/src/components/Layout'
 
 const Home: NextPage = () => {
   return (
-    <Layout>
+    <Layout title="Home">
       <CallToActionWithAnnotation />
     </Layout>
   )

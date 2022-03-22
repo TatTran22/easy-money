@@ -7,7 +7,7 @@ const resources = {
   us: {
     translation: en_US,
   },
-  vi: {
+  vn: {
     translation: vi_VN,
   },
 }

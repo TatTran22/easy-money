@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import { supabase } from '~/src/utils/supabaseClient'
-import { Login, SignUp } from '~/src/components/Forms'
+import { Login } from '~/src/components/Forms'
 import type { NextPage } from 'next'
-import { Stack, Flex, Heading, useToast, Text, useColorModeValue } from '@chakra-ui/react'
-import { Session } from '@supabase/supabase-js'
+import { Stack, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import Layout from '~/src/components/Layout'
 
 const Auth: NextPage = () => {

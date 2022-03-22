@@ -1,3 +1,5 @@
 export const en_US = {
-  test: 'test',
+  test: 'testtt',
+  login: 'Login',
+  signup: 'Sign up',
 }

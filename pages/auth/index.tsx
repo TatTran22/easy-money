@@ -1,12 +1,9 @@
-import { useState } from 'react'
-import { supabase } from '~/src/utils/supabaseClient'
 import { Login, SignUp } from '~/src/components/Forms'
 import type { NextPage } from 'next'
-import { Divider, Heading, Grid, useToast, Text, Flex, useColorModeValue } from '@chakra-ui/react'
-import { Session } from '@supabase/supabase-js'
+import { Divider, Flex, useColorModeValue } from '@chakra-ui/react'
 import Layout from '~/src/components/Layout'
 
-const Auth: NextPage = () => {
+const Index: NextPage = () => {
   return (
     <Layout title="Authentication">
       <Flex
@@ -22,4 +19,4 @@ const Auth: NextPage = () => {
   )
 }
 
-export default Auth
+export default Index

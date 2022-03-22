@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  parserOptions: { ecmaVersion: 8 },
+  parserOptions: { ecmaVersion: 13 },
   ignorePatterns: ['node_modules/*', '.next/*', 'out/*', '!.prettierrc.js'],
   extends: ['eslint:recommended'],
   overrides: [
@@ -32,7 +32,7 @@ module.exports = {
         'react/no-unescaped-entities': 'off',
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/anchor-is-valid': 'off',
-        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-console': "off",
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
