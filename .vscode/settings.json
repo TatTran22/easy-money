@@ -13,4 +13,5 @@
   "i18n-ally.localesPaths": [
     "internationalization/locales"
   ],
+  "workbench.editor.wrapTabs": true,
 }

@@ -18,9 +18,10 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon, EmailIcon, LockIcon } from '@chakra-ui/icons'
-import { supabase } from '~/src/utils/supabaseClient'
+// import { supabase } from '~/src/utils/supabaseClient'
 import { validateEmail, validateName, validatePassword } from '~/src/utils/validateInput'
 import { useRouter } from 'next/router'
+import { useAuth } from '~/src/hooks/auth'
 
 export function SignUp() {
   const [loading, setLoading] = useState(false)
@@ -30,11 +31,17 @@ export function SignUp() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState([])
 
   const toast = useToast()
   const router = useRouter()
 
-  const handleSignUpSubmit = async () => {
+  const { register } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: '/dashboard',
+  })
+
+  const handleSignUpSubmit = async (event: { preventDefault: () => void }) => {
     const vldFirstName = validateName(firstName)
     const vldLastName = validateName(lastName)
     const vldEmail = validateEmail(email)
@@ -85,19 +92,31 @@ export function SignUp() {
 
     try {
       setLoading(true)
-      const { error } = await supabase.auth.signUp(
-        {
-          email: email,
-          password: password,
-        },
-        {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          },
-        }
-      )
-      if (error) throw error
+      // const { error } = await supabase.auth.signUp(
+      //   {
+      //     email: email,
+      //     password: password,
+      //   },
+      //   {
+      //     data: {
+      //       first_name: firstName,
+      //       last_name: lastName,
+      //     },
+      //   }
+      // )
+
+      event.preventDefault()
+      const password_confirmation = passwordConfirm
+      const name = `${firstName} ${lastName}`
+      console.log('register', {
+        email,
+        password,
+        password_confirmation,
+        first_name: firstName,
+        last_name: lastName,
+      })
+      await register({ name, email, password, password_confirmation, setErrors })
+      if (errors) throw errors
       toast({
         title: 'Success!',
         description: 'You have successfully signed up. Please check your email to verify your account.',
@@ -105,10 +124,10 @@ export function SignUp() {
         isClosable: true,
       })
       router.push('/')
-    } catch (error: any) {
-      console.log(error)
+    } catch (errors: any) {
+      console.log(errors)
       toast({
-        title: error.error_description || error.message,
+        title: errors.error_description || errors.message,
         status: 'error',
         duration: 10000,
         isClosable: true,

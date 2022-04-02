@@ -26,16 +26,24 @@ import { supabase } from '~/src/utils/supabaseClient'
 import { validateEmail } from '~/src/utils/validateInput'
 import { Provider } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
+import { useAuth } from '~/src/hooks/auth'
 
 export function Login() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState([])
+  const [status, setStatus] = useState(null)
   const toast = useToast()
   const router = useRouter()
 
-  const handleLogin = async () => {
+  const { login } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: '/dashboard',
+  })
+
+  const handleLogin = async (event) => {
     const vldEmail = validateEmail(email)
 
     if (!vldEmail.isValid) {
@@ -54,8 +62,11 @@ export function Login() {
 
     try {
       setLoading(true)
-      const { error } = await supabase.auth.signIn({ email: email, password: password })
-      if (error) throw error
+      event.preventDefault()
+
+      login({ email, password, setErrors, setStatus })
+      // const { error } = await supabase.auth.signIn({ email: email, password: password })
+      if (errors) throw errors
       toast({
         title: 'Login successful',
         description: 'You are now logged in',
@@ -64,15 +75,15 @@ export function Login() {
         isClosable: true,
       })
       router.push('/')
-    } catch (error: any) {
+    } catch (errors: any) {
       toast({
         title: 'Login failed',
-        description: error.message,
+        description: errors.message,
         status: 'error',
         duration: 5000,
         isClosable: true,
       })
-      console.log(error)
+      console.log(errors)
     } finally {
       setLoading(false)
     }
