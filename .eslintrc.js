@@ -1,44 +1,56 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
     node: true,
     es6: true,
+    commonjs: true,
   },
-  parserOptions: { ecmaVersion: 13 },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 13,
+    sourceType: 'module',
+    tsconfigRootDir: __dirname,
+    project: './tsconfig.eslint.json',
+  },
   ignorePatterns: ['node_modules/*', '.next/*', 'out/*', '!.prettierrc.js'],
-  extends: ['eslint:recommended'],
-  overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      parser: '@typescript-eslint/parser',
-      settings: { react: { version: 'detect' } },
-      env: {
-        browser: true,
-        node: true,
-        es6: true,
+  extends: [
+    'plugin:react/recommended',
+    'airbnb-typescript',
+    'prettier',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+  ],
+  plugins: ['prettier', 'import', 'react-hooks'],
+  rules: {
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+    'react/no-unescaped-entities': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'no-console': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
       },
-      plugins: ['prettier'],
-      extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended',
-        'prettier',
-        'plugin:react-hooks/recommended',
-        'plugin:jsx-a11y/recommended',
-      ],
-      rules: {
-        'react/prop-types': 'off',
-        'react/display-name': 'off',
-        'react/no-unescaped-entities': 'off',
-        'react/react-in-jsx-scope': 'off',
-        'jsx-a11y/anchor-is-valid': 'off',
-        'no-console': "off",
-        '@typescript-eslint/no-unused-vars': ['error'],
-        '@typescript-eslint/no-empty-interface': 'off',
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
-        'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    ],
+  },
+  settings: {
+    react: { version: 'detect' },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.eslint.json',
       },
     },
-  ],
+  },
 }

@@ -1,42 +1,13 @@
-import { useTranslation } from 'react-i18next'
-
-interface NavItem {
-  label: string
-  subLabel?: string
-  children?: Array<NavItem>
-  href?: string
-}
+import type { NavItem } from '@/types/nav'
 
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Budgets',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
+    href: '/budgets',
   },
   {
     label: 'Transactions',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
+    href: '/transactions',
   },
   {
     label: 'Pricing',

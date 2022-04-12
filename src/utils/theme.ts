@@ -4,23 +4,29 @@ import { mode } from '@chakra-ui/theme-tools'
 const styles = {
   global: (props: any) => ({
     body: {
-      bg: mode('#fff', '#2d3142')(props),
+      bg: mode('white', 'lightGreen.400')(props),
     },
   }),
 }
 
 const colors = {
-  brand: {
-    50: '#f6e8ff',
-    100: '#e3bdff',
-    200: '#cd94ff',
-    300: '#b46ef7',
-    400: '#9a4ce7',
-    500: '#7e31ce',
-    600: '#641eab',
-    700: '#4b1483',
-    800: '#341158',
-    900: '#1e0d2d',
+  lightGreen: {
+    100: '#F9F8EB',
+    200: '#A7D7C5',
+    300: '#74B49B',
+    400: '#5C8D89',
+  },
+  darkGreen: {
+    100: '#382933',
+    200: '#3B5249',
+    300: '#519872',
+    400: '#A4B494',
+  },
+  palette1: {
+    100: '#1D2D50',
+    200: '#133B5C',
+    300: '#1E5F74',
+    400: '#FCDAB7',
   },
 }
 

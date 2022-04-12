@@ -1,6 +1,7 @@
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 import { NextAppPageProps } from '@/types/app'
 import CallToActionWithAnnotation from '~/src/components/CallToActionWithAnnotation'
+import { Chakra } from '~/Chakra'
 
 import Layout from '~/src/components/Layout'
 
@@ -8,24 +9,18 @@ type IndexPageServerSideProps = {
   meta: {
     title: string
   }
+  cookies?: string
 }
 
-const IndexPage: NextPage<NextAppPageProps> = ({ meta }) => {
+const IndexPage: NextPage<NextAppPageProps> = ({ cookies }: IndexPageServerSideProps) => {
   return (
-    <Layout title="Home">
-      <CallToActionWithAnnotation />
-    </Layout>
+    <Chakra cookies={cookies}>
+      <Layout title="Home">
+        <CallToActionWithAnnotation />
+      </Layout>
+    </Chakra>
   )
 }
 
 export default IndexPage
-
-export const getServerSideProps: GetServerSideProps<IndexPageServerSideProps> = async () => {
-  return {
-    props: {
-      meta: {
-        title: 'Next.js Starter Kit',
-      },
-    },
-  }
-}
+export { getServerSideProps } from '~/Chakra'

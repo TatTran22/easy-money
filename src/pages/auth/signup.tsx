@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import { supabase } from '~/src/utils/supabaseClient'
-import { Login, SignUp } from '~/src/components/Forms'
-import type { NextPage } from 'next'
-import { Stack, Heading, Grid, useToast, Text, Flex, useColorModeValue } from '@chakra-ui/react'
-import { Session } from '@supabase/supabase-js'
+import { SignUp } from '~/src/components/Forms'
+import { Stack, Heading, Text, Flex, useColorModeValue } from '@chakra-ui/react'
 import Layout from '~/src/components/Layout'
+import { Chakra } from '~/Chakra'
 
-const Auth: NextPage = () => {
-  return (
+interface PropertiesProps {
+  cookies?: string
+}
+
+const Auth = ({ cookies }: PropertiesProps) => (
+  <Chakra cookies={cookies}>
     <Layout title="Sign Up">
       <Flex
         bg={useColorModeValue('gray.100', 'gray.800')}
@@ -25,7 +26,8 @@ const Auth: NextPage = () => {
         <SignUp />
       </Flex>
     </Layout>
-  )
-}
+  </Chakra>
+)
 
 export default Auth
+export { getServerSideProps } from '~/Chakra'

@@ -104,7 +104,7 @@ export function SignUp() {
         duration: 7000,
         isClosable: true,
       })
-      router.push('/')
+      await router.push('/')
     } catch (error: any) {
       console.log(error)
       toast({
@@ -178,7 +178,7 @@ export function SignUp() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <InputRightElement h={'full'}>
-                <Button variant={'ghost'} onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                <Button variant={'ghost'} onClick={() => setShowPassword((sp) => !sp)}>
                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                 </Button>
               </InputRightElement>

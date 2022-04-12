@@ -24,7 +24,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { useEffect, useState } from 'react'
 import { supabase } from '~/src/utils/supabaseClient'
 import { validateEmail } from '~/src/utils/validateInput'
-import { Provider } from '@supabase/supabase-js'
+import { ApiError, Provider } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
 
 export function Login() {
@@ -89,13 +89,14 @@ export function Login() {
     if (supabase.auth.session()) {
       router.push('/')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <HStack spacing={8} py={12} px={6} align={'center'} justifyContent={'center'}>
-      <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8} width={'lg'}>
+      <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'xl'} p={8} width={'lg'}>
         <Stack spacing={4}>
           <FormControl id="email">
-            <FormLabel bg={useColorModeValue('white', 'gray.700')}>Email address</FormLabel>
+            <FormLabel>Email address</FormLabel>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
                 <EmailIcon color="gray.300" />

@@ -79,8 +79,8 @@ export default function WithSubnavigation() {
   return (
     <Box as={'nav'}>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg={useColorModeValue('lightGreen.200', '#534340')}
+        color={useColorModeValue('black', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
@@ -107,7 +107,6 @@ export default function WithSubnavigation() {
         >
           <Link
             href={'/'}
-            color={useColorModeValue('gray.700', 'white')}
             _hover={{
               textDecoration: 'none',
             }}
@@ -123,7 +122,7 @@ export default function WithSubnavigation() {
                 fontFamily={'heading'}
                 marginLeft={'2'}
                 fontWeight={'bold'}
-                color={useColorModeValue('brand.800', 'white')}
+                color={useColorModeValue('darkGreen.100', 'white')}
               >
                 {siteMeta.title}
               </Text>
@@ -178,8 +177,8 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200')
-  const linkHoverColor = useColorModeValue('gray.800', 'white')
+  const linkColor = useColorModeValue('#212922', 'gray.200')
+  const linkHoverColor = useColorModeValue('#00818A', 'white')
   const popoverContentBgColor = useColorModeValue('white', 'gray.800')
 
   return (
