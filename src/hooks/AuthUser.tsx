@@ -3,17 +3,27 @@ import { Session, User } from '@supabase/supabase-js'
 import { supabase } from '~/src/utils/supabaseClient'
 import { useRouter } from 'next/router'
 
+export const UserContext = createContext<{ user: User | null; session: Session | null }>({
+  user: null,
+  session: null,
+})
+export const useUser = () => {
+  const context = useContext(UserContext)
+  if (context === undefined) {
+    throw new Error(`useUser must be used within a UserContextProvider.`)
+  }
+  return context
+}
 export const SignOut = async () => {
   return supabase.auth.signOut()
 }
-
 export const RequireAuth = () => {
   const { user } = useUser()
   const router = useRouter()
 
   useEffect(() => {
     if (!user) {
-      router.push('/auth/login')
+      void router.push('/auth/login')
     }
   }, [user, router])
 }
@@ -24,15 +34,10 @@ export const AuthRedirect = () => {
 
   useEffect(() => {
     if (user) {
-      router.push('/')
+      void router.push('/')
     }
   }, [user, router])
 }
-
-export const UserContext = createContext<{ user: User | null; session: Session | null }>({
-  user: null,
-  session: null,
-})
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const UserContextProvider = (props: any) => {
@@ -43,7 +48,7 @@ export const UserContextProvider = (props: any) => {
     const ss = supabase.auth.session()
     setSession(ss)
     setUser(ss?.user ?? null)
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, sess) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, sess) => {
       console.log(`Supabase auth event: ${event}`)
       setSession(sess)
       setUser(sess?.user ?? null)
@@ -60,14 +65,6 @@ export const UserContextProvider = (props: any) => {
     user,
   }
   return <UserContext.Provider value={value} {...props} />
-}
-
-export const useUser = () => {
-  const context = useContext(UserContext)
-  if (context === undefined) {
-    throw new Error(`useUser must be used within a UserContextProvider.`)
-  }
-  return context
 }
 
 const AuthUser = () => {
